@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+@import "vue3-perfect-scrollbar/dist/vue3-perfect-scrollbar.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#app {
+    @apply absolute w-full h-full font-nunito
+}
+
+* {
+    -webkit-tap-highlight-color: transparent;
+}
