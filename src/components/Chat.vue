@@ -35,7 +35,7 @@ function send() {
 
   const botMessage: ChatMessage = {
     bot: true,
-    text: answers[text.value] ?? 'Не могу вас понять',
+    text: answers[text.value as Hint] ?? 'Не могу вас понять',
     date: new Date(),
   }
   setTimeout(() => messages.value = [...messages.value, botMessage], 300)
