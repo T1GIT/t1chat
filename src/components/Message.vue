@@ -11,7 +11,7 @@ const props = defineProps<{
     <div
       class="w-64 max-w-[max-content] p-3 pb-2 flex flex-col gap-1 shadow-sm"
       :class="[
-        props.bot ? 'rounded-r-lg rounded-tl-lg' : 'rounded-l-lg rounded-tr-lg',
+        props.bot ? 'rounded-r-2xl rounded-tl-2xl' : 'rounded-l-2xl rounded-tr-2xl',
         props.bot ? 'bg-primary/30' : 'bg-secondary/30',
         props.bot ? 'mt-auto' : 'ml-auto',
       ]"
