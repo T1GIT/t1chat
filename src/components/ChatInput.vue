@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useModel } from 'vue'
+import { computed, useModel } from 'vue'
 import { PaperAirplaneIcon } from '@heroicons/vue/24/solid'
 import { Hint } from '../constants/hint.ts'
 
@@ -13,10 +13,16 @@ const emits = defineEmits<{
 }>()
 
 const text = useModel(props, 'text')
+const empty = computed(() => text.value === '')
 
 function handleHint(content: string) {
   text.value = content
   emits('send')
+}
+
+function handleSubmit() {
+  if (!empty.value)
+    emits('send')
 }
 </script>
 
@@ -33,19 +39,24 @@ function handleHint(content: string) {
       </button>
     </div>
 
-    <form class="relative pr-3 flex flex-row bg-white rounded-2xl shadow-lg" @submit.prevent="emits('send')">
-      <label class="absolute pl-4 inset-0 flex items-center pointer-events-none">
+    <form class="relative pr-3 flex flex-row bg-white rounded-2xl shadow-lg" @submit.prevent="handleSubmit">
+      <label class="absolute pl-5 inset-0 flex items-center opacity-50 pointer-events-none">
         <Transition
           enter-from-class="translate-x-5 opacity-0"
-          leave-to-class="translate-x-5 opacity-0"
+          leave-to-class="translate-x-10 opacity-0"
           enter-active-class="transition duration-300"
-          leave-active-class="transition duration-200"
+          leave-active-class="transition duration-100 linear"
         >
-          <span v-show="text === ''">Введите сообщение ...</span>
+          <span v-show="empty">Введите сообщение ...</span>
         </Transition>
       </label>
 
-      <input v-model="text" autofocus class="flex-auto px-4 py-2 bg-transparent outline-0">
+      <input
+        class="flex-auto px-3 py-2 bg-transparent outline-0"
+        :value="text"
+        autofocus
+        @input="(e) => text = (e.target as HTMLInputElement).value"
+      >
 
       <Transition
         enter-from-class="-translate-x-2 opacity-0"
@@ -53,7 +64,7 @@ function handleHint(content: string) {
         enter-active-class="transition duration-300"
         leave-active-class="transition duration-200"
       >
-        <button v-show="text !== ''" type="submit">
+        <button v-show="!empty" type="submit">
           <PaperAirplaneIcon class="h-6 w-6 text-primary/70 drop-shadow-md outline-0 transition duration-300 hover:text-primary hover:duration-200 active:translate-x-1" />
         </button>
       </Transition>
